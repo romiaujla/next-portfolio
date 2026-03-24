@@ -1,8 +1,86 @@
 "use client";
 
-import type { ThemeProviderProps } from "next-themes";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+type Theme = "light" | "dark" | "system";
+
+type ThemeContextValue = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+};
+
+type ThemeProviderProps = {
+  children: ReactNode;
+  defaultTheme?: Theme;
+};
+
+const ThemeContext = createContext<ThemeContextValue | null>(null);
+const STORAGE_KEY = "portfolio-theme";
+
+function resolveDarkMode(theme: Theme): boolean {
+  if (theme === "dark") return true;
+  if (theme === "light") return false;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
+function applyTheme(theme: Theme) {
+  const isDark = resolveDarkMode(theme);
+  document.documentElement.classList.toggle("dark", isDark);
+  document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+}
+
+export function ThemeProvider({
+  children,
+  defaultTheme = "system",
+}: ThemeProviderProps) {
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") return defaultTheme;
+    const storedTheme = window.localStorage.getItem(
+      STORAGE_KEY,
+    ) as Theme | null;
+    return storedTheme ?? defaultTheme;
+  });
+
+  useEffect(() => {
+    applyTheme(theme);
+
+    if (theme !== "system") {
+      return;
+    }
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleSystemThemeChange = () => applyTheme("system");
+    media.addEventListener("change", handleSystemThemeChange);
+    return () => media.removeEventListener("change", handleSystemThemeChange);
+  }, [theme]);
+
+  const setTheme = useCallback((nextTheme: Theme) => {
+    setThemeState(nextTheme);
+    window.localStorage.setItem(STORAGE_KEY, nextTheme);
+    applyTheme(nextTheme);
+  }, []);
+
+  const contextValue = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
+
+  return (
+    <ThemeContext.Provider value={contextValue}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used inside ThemeProvider");
+  }
+  return context;
 }

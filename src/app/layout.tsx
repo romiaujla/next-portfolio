@@ -31,9 +31,7 @@ export default function RootLayout({
       className={`${sora.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider defaultTheme="system">{children}</ThemeProvider>
       </body>
     </html>
   );
