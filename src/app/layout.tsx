@@ -1,3 +1,5 @@
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Sora, Space_Grotesk } from "next/font/google";
@@ -14,9 +16,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Your Name",
+  title: "Ramanpreet Aujla — Full-Stack Engineer",
   description:
-    "Portfolio boilerplate built with Next.js, React, TypeScript, Tailwind CSS, and modern DX tooling.",
+    "Full-stack engineer building scalable, high-performance applications in cloud-native environments.",
 };
 
 export default function RootLayout({
@@ -31,7 +33,11 @@ export default function RootLayout({
       className={`${sora.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider defaultTheme="system">{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="system">
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

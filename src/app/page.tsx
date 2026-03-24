@@ -1,27 +1,10 @@
 "use client";
 
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
 import { Section, SkillChip } from "@/components/section";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/lib/site";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Code2, Handshake, Mail, MapPin } from "lucide-react";
-
-const container = {
-  hidden: { opacity: 0, y: 10 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      staggerChildren: 0.08,
-      duration: 0.4,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0 },
-};
 
 function getIcon(label: string) {
   if (label === "GitHub") return <Code2 className="h-4 w-4" />;
@@ -31,159 +14,173 @@ function getIcon(label: string) {
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-14 px-6 py-10 sm:px-10 md:gap-20 md:py-14">
-      <motion.header
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="relative overflow-hidden rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm backdrop-blur-xl sm:p-10 dark:border-white/15 dark:bg-white/5"
-      >
-        <div className="absolute -top-36 -right-18 h-72 w-72 rounded-full bg-[radial-gradient(circle,#ffb564_0%,transparent_70%)] opacity-70 blur-sm" />
-        <div className="absolute -bottom-40 -left-20 h-72 w-72 rounded-full bg-[radial-gradient(circle,#80a8ff_0%,transparent_68%)] opacity-65 blur-sm" />
-
+    <main className="mx-auto flex w-full max-w-5xl flex-col px-6 sm:px-10">
+      {/* ── Hero ───────────────────────────────────────────── */}
+      <section className="pt-20 pb-20 sm:pt-28 md:pt-32">
         <motion.div
-          variants={item}
-          className="relative flex items-center justify-between"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="space-y-6"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/65 px-3 py-1 text-xs font-medium tracking-wide dark:border-white/15 dark:bg-white/10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-(--border) px-3 py-1 text-xs font-medium tracking-wide text-(--muted)">
             <MapPin className="h-3.5 w-3.5" />
             {siteConfig.location}
           </div>
-          <ThemeToggle />
-        </motion.div>
 
-        <motion.div
-          variants={item}
-          className="relative mt-8 space-y-4 md:mt-10"
-        >
-          <p className="text-xs tracking-[0.2em] text-(--muted) uppercase">
-            {siteConfig.role}
-          </p>
-          <h1 className="text-4xl leading-tight font-bold tracking-tight text-balance sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl leading-[1.1] font-bold tracking-tight sm:text-5xl md:text-6xl">
             {siteConfig.name}
           </h1>
-          <p className="max-w-2xl text-lg leading-relaxed text-(--muted)">
+
+          <p className="text-lg font-medium text-(--accent)">
+            {siteConfig.role}
+          </p>
+
+          <p className="max-w-xl text-base leading-relaxed text-(--muted)">
             {siteConfig.summary}
           </p>
         </motion.div>
 
         <motion.div
-          variants={item}
-          className="relative mt-8 flex flex-wrap items-center gap-3"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="mt-10 flex flex-wrap items-center gap-3"
         >
-          {siteConfig.socialLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-white dark:border-white/15 dark:bg-white/10 dark:hover:bg-white/15"
-            >
-              {getIcon(link.label)}
-              {link.label}
-            </a>
-          ))}
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-full bg-(--accent) px-5 py-2.5 text-sm font-medium text-(--accent-foreground) transition hover:opacity-90"
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .querySelector("#contact")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            <Mail className="h-4 w-4" />
+            Get in Touch
+          </a>
+          {siteConfig.socialLinks
+            .filter((l) => l.label !== "Email")
+            .map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-(--border) px-4 py-2.5 text-sm font-medium transition hover:border-(--foreground)/20"
+              >
+                {getIcon(link.label)}
+                {link.label}
+              </a>
+            ))}
         </motion.div>
-      </motion.header>
+      </section>
 
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="space-y-14"
-      >
-        <motion.div variants={item}>
+      {/* ── Divider ────────────────────────────────────────── */}
+      <hr className="border-(--border)" />
+
+      {/* ── Skills ─────────────────────────────────────────── */}
+      <div className="py-20">
+        <FadeIn>
           <Section id="skills" title="Core Technologies">
-            <div className="flex flex-wrap gap-2.5">
+            <StaggerContainer className="flex flex-wrap gap-2.5">
               {siteConfig.skills.map((skill) => (
-                <SkillChip key={skill} label={skill} />
+                <StaggerItem key={skill}>
+                  <SkillChip label={skill} />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </Section>
-        </motion.div>
+        </FadeIn>
+      </div>
 
-        <motion.div variants={item}>
+      <hr className="border-(--border)" />
+
+      {/* ── Experience ─────────────────────────────────────── */}
+      <div className="py-20">
+        <FadeIn>
           <Section id="experience" title="Professional Experience">
-            <div className="grid gap-4 md:grid-cols-2">
-              {siteConfig.experiences.map((experience) => (
-                <article
-                  key={experience.title}
-                  className="group rounded-2xl border border-black/10 bg-white/65 p-5 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/15 dark:bg-white/5"
-                >
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    {experience.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-(--muted)">
-                    {experience.description}
-                  </p>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {experience.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-black/5 px-2.5 py-1 text-xs font-medium dark:bg-white/10"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </article>
+            <div className="grid gap-5 md:grid-cols-2">
+              {siteConfig.experiences.map((experience, i) => (
+                <FadeIn key={experience.title} delay={i * 0.08}>
+                  <article className="group flex h-full flex-col rounded-2xl border border-(--border) bg-(--card) p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--accent)/30 hover:shadow-(--accent)/5 hover:shadow-lg">
+                    <h3 className="text-base leading-snug font-semibold tracking-tight">
+                      {experience.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-(--muted)">
+                      {experience.description}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {experience.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-(--foreground)/5 px-2.5 py-1 text-xs font-medium text-(--muted)"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </article>
+                </FadeIn>
               ))}
             </div>
           </Section>
-        </motion.div>
+        </FadeIn>
+      </div>
 
-        <motion.div variants={item}>
+      <hr className="border-(--border)" />
+
+      {/* ── Projects ───────────────────────────────────────── */}
+      <div className="py-20">
+        <FadeIn>
           <Section id="projects" title="Featured Projects">
-            <div className="grid gap-4 md:grid-cols-2">
-              {siteConfig.projects.map((project) => (
-                <article
-                  key={project.title}
-                  className="group rounded-2xl border border-black/10 bg-white/65 p-5 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/15 dark:bg-white/5"
-                >
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-(--muted)">
-                    {project.description}
-                  </p>
+            <div className="grid gap-5 md:grid-cols-2">
+              {siteConfig.projects.map((project, i) => (
+                <FadeIn key={project.title} delay={i * 0.08}>
+                  <article className="group flex h-full flex-col rounded-2xl border border-(--border) bg-(--card) p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--accent)/30 hover:shadow-(--accent)/5 hover:shadow-lg">
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-(--accent)/10 text-(--accent)">
+                      <Code2 className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-base leading-snug font-semibold tracking-tight">
+                      {project.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-(--muted)">
+                      {project.description}
+                    </p>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-black/5 px-2.5 py-1 text-xs font-medium dark:bg-white/10"
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-(--foreground)/5 px-2.5 py-1 text-xs font-medium text-(--muted)"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-5 flex items-center gap-4 border-t border-(--border) pt-5">
+                      <a
+                        href={project.sourceHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-(--accent) transition hover:opacity-80"
                       >
-                        {tag}
+                        Source Code
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                      <span className="rounded-full border border-(--border) px-3 py-1 text-xs font-medium text-(--muted)/60">
+                        Demo — WIP
                       </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 flex flex-wrap items-center gap-3">
-                    <a
-                      href={project.sourceHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 group-hover:underline"
-                    >
-                      Source Code
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                    <button
-                      type="button"
-                      disabled
-                      title="Work In Progress"
-                      className="cursor-not-allowed rounded-full border border-black/10 px-3 py-1 text-xs font-medium opacity-70 dark:border-white/15"
-                    >
-                      Demo
-                    </button>
-                  </div>
-                </article>
+                    </div>
+                  </article>
+                </FadeIn>
               ))}
             </div>
           </Section>
-        </motion.div>
-      </motion.div>
+        </FadeIn>
+      </div>
     </main>
   );
 }

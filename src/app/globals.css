@@ -1,25 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f2efe7;
-  --surface: #fffaf0;
-  --foreground: #1a1d26;
-  --muted: #4d596f;
+  --background: #fafafa;
+  --surface: #ffffff;
+  --foreground: #18181b;
+  --muted: #71717a;
+  --accent: #6366f1;
+  --accent-foreground: #ffffff;
+  --border: #e4e4e7;
+  --card: #ffffff;
+  --card-border: #f0f0f3;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
   --font-sans: var(--font-sora);
   --font-mono: var(--font-space-grotesk);
 }
 
 .dark {
-  --background: #121721;
-  --surface: #1a2231;
-  --foreground: #f2f4f8;
-  --muted: #abb8ce;
+  --background: #0c0c0f;
+  --surface: #18181b;
+  --foreground: #e4e4e7;
+  --muted: #a1a1aa;
+  --accent: #818cf8;
+  --accent-foreground: #0c0c0f;
+  --border: #27272a;
+  --card: #18181b;
+  --card-border: #27272a;
 }
 
 body {
@@ -28,6 +42,7 @@ body {
   isolation: isolate;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+  background-color: var(--background);
 }
 
 body::before {
@@ -36,10 +51,16 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-color: var(--background);
-  background-image:
-    radial-gradient(circle at 18% 14%, #f6d39a 0%, transparent 34%),
-    radial-gradient(circle at 86% 78%, #9db8ff 0%, transparent 36%),
-    linear-gradient(160deg, var(--background) 0%, var(--surface) 100%);
+  background:
+    radial-gradient(
+      ellipse 60% 50% at 20% 0%,
+      color-mix(in srgb, var(--accent) 6%, transparent) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 80% 100%,
+      color-mix(in srgb, var(--accent) 4%, transparent) 0%,
+      transparent 100%
+    );
   background-repeat: no-repeat;
 }

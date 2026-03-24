@@ -17,11 +17,15 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <section id={id} className={cn("space-y-5", className)}>
+    <section id={id} className={cn("scroll-mt-24 space-y-8", className)}>
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {title}
+        </h2>
         {description ? (
-          <p className="max-w-2xl text-sm text-(--muted)">{description}</p>
+          <p className="max-w-2xl text-base leading-relaxed text-(--muted)">
+            {description}
+          </p>
         ) : null}
       </div>
       {children}
@@ -31,7 +35,7 @@ export function Section({
 
 export function SkillChip({ label }: { label: string }) {
   return (
-    <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-medium tracking-wide dark:border-white/15 dark:bg-white/10">
+    <span className="rounded-full border border-(--border) bg-(--card) px-3.5 py-1.5 text-xs font-medium tracking-wide transition-colors hover:border-(--accent)/30 hover:text-(--accent)">
       {label}
     </span>
   );
