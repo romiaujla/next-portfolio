@@ -1,3 +1,4 @@
+import { ConsoleEasterEgg } from "@/components/console-easter-egg";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -34,6 +35,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider defaultTheme="system">
+          <ConsoleEasterEgg />
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />
