@@ -38,8 +38,8 @@ export default function Home() {
         animate="show"
         className="relative overflow-hidden rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm backdrop-blur-xl sm:p-10 dark:border-white/15 dark:bg-white/5"
       >
-        <div className="absolute -top-36 right-[-72px] h-72 w-72 rounded-full bg-[radial-gradient(circle,_#ffb564_0%,_transparent_70%)] opacity-70 blur-sm" />
-        <div className="absolute -bottom-40 -left-20 h-72 w-72 rounded-full bg-[radial-gradient(circle,_#80a8ff_0%,_transparent_68%)] opacity-65 blur-sm" />
+        <div className="absolute -top-36 -right-18 h-72 w-72 rounded-full bg-[radial-gradient(circle,#ffb564_0%,transparent_70%)] opacity-70 blur-sm" />
+        <div className="absolute -bottom-40 -left-20 h-72 w-72 rounded-full bg-[radial-gradient(circle,#80a8ff_0%,transparent_68%)] opacity-65 blur-sm" />
 
         <motion.div
           variants={item}
@@ -56,13 +56,13 @@ export default function Home() {
           variants={item}
           className="relative mt-8 space-y-4 md:mt-10"
         >
-          <p className="text-xs tracking-[0.2em] text-[color:var(--muted)] uppercase">
+          <p className="text-xs tracking-[0.2em] text-(--muted) uppercase">
             {siteConfig.role}
           </p>
           <h1 className="text-4xl leading-tight font-bold tracking-tight text-balance sm:text-5xl md:text-6xl">
             {siteConfig.name}
           </h1>
-          <p className="max-w-2xl text-lg leading-relaxed text-[color:var(--muted)]">
+          <p className="max-w-2xl text-lg leading-relaxed text-(--muted)">
             {siteConfig.summary}
           </p>
         </motion.div>
@@ -121,7 +121,7 @@ export default function Home() {
                   <h3 className="text-lg font-semibold tracking-tight">
                     {project.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted)]">
+                  <p className="mt-2 text-sm leading-relaxed text-(--muted)">
                     {project.description}
                   </p>
 
