@@ -93,11 +93,7 @@ export default function Home() {
         className="space-y-14"
       >
         <motion.div variants={item}>
-          <Section
-            id="skills"
-            title="Tech Stack"
-            description="Core tools currently in this boilerplate, ready for your real project and profile content."
-          >
+          <Section id="skills" title="Core Technologies">
             <div className="flex flex-wrap gap-2.5">
               {siteConfig.skills.map((skill) => (
                 <SkillChip key={skill} label={skill} />
@@ -107,11 +103,38 @@ export default function Home() {
         </motion.div>
 
         <motion.div variants={item}>
-          <Section
-            id="projects"
-            title="Featured Work"
-            description="Drop your own projects here. Each card is data-driven from src/lib/site.ts."
-          >
+          <Section id="experience" title="Professional Experience">
+            <div className="grid gap-4 md:grid-cols-2">
+              {siteConfig.experiences.map((experience) => (
+                <article
+                  key={experience.title}
+                  className="group rounded-2xl border border-black/10 bg-white/65 p-5 transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/15 dark:bg-white/5"
+                >
+                  <h3 className="text-lg font-semibold tracking-tight">
+                    {experience.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-(--muted)">
+                    {experience.description}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {experience.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-black/5 px-2.5 py-1 text-xs font-medium dark:bg-white/10"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </Section>
+        </motion.div>
+
+        <motion.div variants={item}>
+          <Section id="projects" title="Featured Projects">
             <div className="grid gap-4 md:grid-cols-2">
               {siteConfig.projects.map((project) => (
                 <article
@@ -136,15 +159,25 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 group-hover:underline"
-                  >
-                    View project
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
+                  <div className="mt-5 flex flex-wrap items-center gap-3">
+                    <a
+                      href={project.sourceHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 group-hover:underline"
+                    >
+                      Source Code
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                    <button
+                      type="button"
+                      disabled
+                      title="Work In Progress"
+                      className="cursor-not-allowed rounded-full border border-black/10 px-3 py-1 text-xs font-medium opacity-70 dark:border-white/15"
+                    >
+                      Demo
+                    </button>
+                  </div>
                 </article>
               ))}
             </div>

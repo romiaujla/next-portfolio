@@ -24,10 +24,22 @@
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 16% 12%, #f6d39a 0%, transparent 30%),
-    radial-gradient(circle at 92% 84%, #9db8ff 0%, transparent 30%),
-    linear-gradient(160deg, var(--background) 0%, var(--surface) 70%);
+  position: relative;
+  isolation: isolate;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 18% 14%, #f6d39a 0%, transparent 34%),
+    radial-gradient(circle at 86% 78%, #9db8ff 0%, transparent 36%),
+    linear-gradient(160deg, var(--background) 0%, var(--surface) 100%);
+  background-repeat: no-repeat;
 }
