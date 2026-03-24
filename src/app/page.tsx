@@ -1,5 +1,6 @@
 "use client";
 
+import { HeroGraph } from "@/components/hero-graph";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/motion";
 import { Section, SkillChip } from "@/components/section";
 import { siteConfig } from "@/lib/site";
@@ -16,12 +17,12 @@ export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-col px-6 sm:px-10">
       {/* ── Hero ───────────────────────────────────────────── */}
-      <section className="pt-20 pb-20 sm:pt-28 md:pt-32">
+      <section className="flex flex-col items-start gap-8 pt-20 pb-20 sm:pt-28 md:flex-row md:items-center md:gap-12 md:pt-32">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="space-y-6"
+          className="min-w-0 flex-1 space-y-6"
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-(--border) px-3 py-1 text-xs font-medium tracking-wide text-(--muted)">
             <MapPin className="h-3.5 w-3.5" />
@@ -39,41 +40,51 @@ export default function Home() {
           <p className="max-w-xl text-base leading-relaxed text-(--muted)">
             {siteConfig.summary}
           </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="flex flex-wrap items-center gap-3 pt-4"
+          >
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full bg-(--accent) px-5 py-2.5 text-sm font-medium text-(--accent-foreground) transition hover:opacity-90"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .querySelector("#contact")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <Mail className="h-4 w-4" />
+              Get in Touch
+            </a>
+            {siteConfig.socialLinks
+              .filter((l) => l.label !== "Email")
+              .map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-(--border) px-4 py-2.5 text-sm font-medium transition hover:border-(--foreground)/20"
+                >
+                  {getIcon(link.label)}
+                  {link.label}
+                </a>
+              ))}
+          </motion.div>
         </motion.div>
 
+        {/* 3D accent — right column on md+ */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="mt-10 flex flex-wrap items-center gap-3"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          className="hidden w-full shrink-0 md:block md:w-[340px] lg:w-[400px]"
         >
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-full bg-(--accent) px-5 py-2.5 text-sm font-medium text-(--accent-foreground) transition hover:opacity-90"
-            onClick={(e) => {
-              e.preventDefault();
-              document
-                .querySelector("#contact")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            <Mail className="h-4 w-4" />
-            Get in Touch
-          </a>
-          {siteConfig.socialLinks
-            .filter((l) => l.label !== "Email")
-            .map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-(--border) px-4 py-2.5 text-sm font-medium transition hover:border-(--foreground)/20"
-              >
-                {getIcon(link.label)}
-                {link.label}
-              </a>
-            ))}
+          <HeroGraph />
         </motion.div>
       </section>
 
