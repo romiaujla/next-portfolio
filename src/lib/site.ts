@@ -11,7 +11,8 @@ export type Project = {
 };
 
 export type Experience = {
-  title: string;
+  role: string;
+  company: string;
   description: string;
   tags: string[];
 };
@@ -52,19 +53,22 @@ export const siteConfig = {
   ],
   experiences: [
     {
-      title: "Software Engineer (Contract) | Ford Motor Company",
+      role: "Software Engineer (Contract)",
+      company: "Ford Motor Company",
       description:
         "Leading modernization of Ford's global reservation platform from PEGA to React and Node.js + TypeScript services. Improved API latency from 2-3 seconds to sub-100ms and improved delivery flow with spec-driven and AI-assisted development.",
       tags: ["React", "TypeScript", "Node.js", "Redis", "Playwright"],
     },
     {
-      title: "Software Engineering Team Lead | Workd",
+      role: "Software Engineering Team Lead",
+      company: "Workd",
       description:
         "Led architecture and delivery of full-stack CRM platforms used by thousands of internal users. Drove API integrations, cloud deployments, reusable component patterns, and stronger testing practices across teams.",
       tags: ["TypeScript", "Angular", "Node.js", "SQL", "AWS"],
     },
     {
-      title: "Software Engineer | Workd",
+      role: "Software Engineer",
+      company: "Workd",
       description:
         "Built full-stack CRM and e-commerce features, led client data migrations, and improved product usability and stability through automated testing and close collaboration with UI/UX teams.",
       tags: ["Angular", "Node.js", "MySQL", "Mocha", "Chai"],

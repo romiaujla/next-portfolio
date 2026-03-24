@@ -114,10 +114,17 @@ export default function Home() {
           <Section id="experience" title="Professional Experience">
             <div className="grid gap-5 md:grid-cols-2">
               {siteConfig.experiences.map((experience, i) => (
-                <FadeIn key={experience.title} delay={i * 0.08}>
+                <FadeIn
+                  key={`${experience.role}-${experience.company}`}
+                  delay={i * 0.08}
+                >
                   <article className="group flex h-full flex-col rounded-2xl border border-(--border) bg-(--card) p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--accent)/30 hover:shadow-(--accent)/5 hover:shadow-lg">
                     <h3 className="text-base leading-snug font-semibold tracking-tight">
-                      {experience.title}
+                      <span>{experience.role}</span>
+                      <span className="text-(--accent)">
+                        {" "}
+                        | {experience.company}
+                      </span>
                     </h3>
                     <p className="mt-3 flex-1 text-sm leading-relaxed text-(--muted)">
                       {experience.description}
