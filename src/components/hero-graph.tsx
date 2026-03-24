@@ -5,6 +5,16 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useRef, useSyncExternalStore } from "react";
 import * as THREE from "three";
 
+/* Suppress THREE.Clock deprecation warning from @react-three/fiber internals.
+   R3F hasn't migrated to THREE.Timer yet — safe to silence until they do. */
+if (typeof window !== "undefined") {
+  const _origWarn = console.warn;
+  console.warn = (...args: unknown[]) => {
+    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) return;
+    _origWarn.apply(console, args);
+  };
+}
+
 /* ── Theme hook ──────────────────────────────────────────── */
 
 function subscribeToTheme(callback: () => void) {
