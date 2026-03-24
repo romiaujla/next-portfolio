@@ -64,3 +64,8 @@ body::before {
     );
   background-repeat: no-repeat;
 }
+
+body.not-found-page > nav,
+body.not-found-page > footer {
+  display: none;
+}
